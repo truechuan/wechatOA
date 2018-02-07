@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<context:property-placeholder location="classpath:spring/jdbc.properties" />
+	<util:properties id="systemConfigProperties"
+		location="classpath:system_config.properties" />
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+
+		<!-- 解决初次链接 链接已被释放 start -->
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="acquireRetryDelay" value="1000" />
+		<property name="testConnectionOnCheckin" value="true" />
+		<property name="automaticTestTable" value="C3P0TestTable" />
+		<property name="idleConnectionTestPeriod" value="14400" />
+		<property name="checkoutTimeout" value="3000" />
+		<!-- 解决初次链接 链接已被释放 end -->
+
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+	</bean>
+
+	<!-- sql session factory to create sql session -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.leyidai.admin.mapper" />
+	</bean>
+
+	<!-- configuration for transaction -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>

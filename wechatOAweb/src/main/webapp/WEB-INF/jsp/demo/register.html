@@ -1,0 +1,80 @@
+ <!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>注册信息</title>
+    <meta name="description"  content="" />
+    <meta name="keywords"  content=""/>
+	<link rel="stylesheet" href="<c:url value='<c:url value='/resources/css/bootstrap.min.css'/>">
+	<link rel="stylesheet" href="<c:url value='<c:url value='/resources/css/style.css'/>">
+</head>
+<body id="register">
+	<div class="top">
+		<div class="col-xs-3">
+			<a  href="javascript:history.go(-1);">
+				<div class="leftArrow"></div>
+			</a>
+		</div>
+		<div class="col-xs-6">注册信息</div>
+	</div>
+	<input type="text" placeholder="请输入真实姓名">
+	<input type="text" placeholder="请输入手机号码">
+	<!--<a href="<c:url value='noticeInfo.html"><p>请选择证件类型</p><div class="rightArrow"></div></a>--><!-- Single button -->
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<p>请选择证件类型</p><span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+		<li><a href="<c:url value='#'/>">居民身份证</a></li>
+		<li><a href="<c:url value='#'/>">军官证/武警警官证/士兵证</a></li>
+		<li><a href="<c:url value='#'/>">机动车驾驶证</a></li>
+		<li><a href="<c:url value='#'/>">港澳台通行证</a></li>
+		<li><a href="<c:url value='#'/>">外国人居留证</a></li>
+		<li><a href="<c:url value='#'/>">护照</a></li>
+	  </ul>
+	</div>
+	<input type="text" placeholder="请输入证件号码">
+	<div class="addPhoto">
+		<div class="col-xs-4 text-center">
+			<img src="<c:url value='/resources/img/banner.png'/>">
+			<p>上传成功!</p>
+			<!--<a href="<c:url value=''/>">
+				<div>添加</div>
+			</a>
+			<p>身份证正面</p>-->
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="<c:url value=''/>">
+				<div>添加</div>
+			</a>
+			<p>身份证反面</p>
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="<c:url value=''/>">
+				<div>添加</div>
+			</a>
+			<p>本人正面照</p>
+		</div>
+	</div>
+	<div class="bottomBtn">
+		<a href="<c:url value='">注册</a>
+	</div>
+	<div class="footer">
+		<a class="col-xs-3" href="<c:url value='/'/>"><img src="<c:url value='/resources/img/footIco1.png'/>"><br>首页</a>
+		<a class="col-xs-3" href="<c:url value=''/>"><img src="<c:url value='/resources/img/footIco2.png'/>"><br>预约</a>
+		<a class="col-xs-3" href="<c:url value='noticeList.html'/>"><img src="<c:url value='/resources/img/footIco3.png'/>"><br>公告</a>
+		<a class="col-xs-3" href="<c:url value=''/>"><img src="<c:url value='/resources/img/footIco4.png'/>"><br>我的</a>
+	</div>	
+<script src="<c:url value='/resources/js/jquery.min.js'/>"></script>
+<script src="<c:url value='/resources/js/bootstrap.min.js'/>"></script>
+<script>
+$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+</body>
+</html>

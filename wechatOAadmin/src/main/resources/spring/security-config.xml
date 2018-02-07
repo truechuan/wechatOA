@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<global-method-security pre-post-annotations="enabled" />
+
+	<!-- 该路径下的资源不用过滤 -->
+	<http pattern="/resources/**" security="none" />
+	<http pattern="/" security="none" />
+	<http pattern="/favicon.ico" security="none" />
+	<http pattern="/heepayNotify/*" security="none" />
+
+	<http use-expressions="true" auto-config="true">
+		<form-login login-page="/"
+			authentication-success-handler-ref="myAuthenticationSuccessHandler"
+			authentication-failure-url="/?error=true" />
+		<logout delete-cookies="JSESSIONID" />
+
+		<remember-me user-service-ref="myUserDetailServiceImpl" />
+
+		<session-management invalid-session-url="/">
+			<concurrency-control max-sessions="10"
+				error-if-maximum-exceeded="true" />
+		</session-management>
+		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+	</http>
+
+	<!-- 配置过滤器 -->
+	<beans:bean id="myFilter"
+		class="com.leyidai.admin.security.LYDSecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<!-- 资源与权限对应关系 -->
+		<beans:property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+	</beans:bean>
+
+	<beans:bean id="myAuthenticationSuccessHandler"
+		class="com.leyidai.admin.security.LoginSuccessHandler" />
+
+	<beans:bean name="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!-- 实现了UserDetailsService的Bean -->
+	<authentication-manager alias="myAuthenticationManager">
+		<authentication-provider user-service-ref="myUserDetailServiceImpl">
+			<password-encoder ref="bcryptEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="myAccessDecisionManager"
+		class="com.leyidai.admin.security.LYDAccessDecisionManager" />
+
+	<beans:bean id="mySecurityMetadataSource"
+		class="com.leyidai.admin.security.LYDSecurityMetadataSource">
+	</beans:bean>
+
+	<beans:bean id="myUserDetailServiceImpl"
+		class="com.leyidai.admin.security.LYDUserDetailServiceImpl">
+	</beans:bean>
+
+</beans:beans>

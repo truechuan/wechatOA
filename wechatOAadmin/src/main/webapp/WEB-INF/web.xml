@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<display-name>projectmasteradmin</display-name>
+	<description>projectmasteradmin application</description>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/resources/404.html</location>
+	</error-page>
+
+	<!-- - Location of the XML file that defines the root application context. 
+		- Applied by ContextLoaderServlet. -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/business-config.xml,classpath:spring/security-config.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<!-- - Servlet that dispatches request to registered handlers (Controller 
+		implementations). -->
+	<servlet>
+		<servlet-name>leyidaiadminDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/mvc-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>leyidaiadminDispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<!-- servlet的命 名===注册名称，这个名称可以任意的 -->
+		<servlet-name>ConnectorServlet</servlet-name>
+		<!-- servlet 所在包 -->
+		<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
+		<init-param>
+			<!-- 初始化设置 -->
+			<param-name>XMLConfig</param-name>
+			<param-value>/WEB-INF/ckConfig.xml</param-value>
+		</init-param>
+		<init-param>
+			<!-- 设置是否可以查看debug，在正常时候需要设置为false. -->
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+
+		<!-- load-on-startup 元素在web应用启动的时候指定了 servlet被加载的顺序，它的值必须是一个整数。 如果它的值是一个负整数或是这个元素不存在， 
+			那么容器会在该servlet被调用的时候，加载这个servlet 。如果值是正整数或零，容器在配置的时候就加载并初始化这个servlet， 容器必须保证值小的先被加载。如果值相等，容器可以自动选择先加载谁。 
+			在此不是必须的 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 映射的相对路径，主要是在其他地方使用，比如js,页面访问 -->
+	<servlet-mapping>
+		<servlet-name>ConnectorServlet</servlet-name>
+		<url-pattern>
+			/ckfinder/core/connector/java/connector.java
+		</url-pattern>
+	</servlet-mapping>
+	
+	<!-- character set encoding 的配置 -->
+	<filter>
+		<filter-name>setCharacterEncoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>setCharacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Spring security configuration -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- log4j configuration -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>projectmasteradmin.root</param-value>
+	</context-param>
+
+	<!-- delete jsessionid -->
+	<filter>
+		<filter-name>DisableUrlSessionFilter</filter-name>
+		<filter-class>com.leyidai.admin.filter.DisableUrlSessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>DisableUrlSessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- filter html tag -->
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.leyidai.admin.filter.XSSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

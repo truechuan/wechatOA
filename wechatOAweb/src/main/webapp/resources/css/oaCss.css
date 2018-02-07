@@ -1,0 +1,64 @@
+body {
+    background: #f6f6f6;
+    padding: 0;
+    margin: 0;
+    font-family: "Microsoft YaHei UI";
+    font-weight: bolder;
+}
+
+.top {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #17b9ff;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    top: 0;
+}
+
+.leftArrow, .rightArrow, .topArrow, .bottomArrow {
+    width: 12px;
+    height: 12px;
+    margin-top: 14px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+}
+
+.leftArrow {
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.marginTop{
+    margin-top:55px;
+}
+
+.mainInfo{
+    background-color: white;
+    padding:0 15px;
+}
+
+
+.right{
+    float: right;
+    color:#999999;
+    font-weight: normal;
+}
+
+.mainRow{
+    background-color: white;
+
+}
+
+.myRow span{
+    line-height: 40px;
+}
+
+hr{
+    margin:0;padding:0;
+}

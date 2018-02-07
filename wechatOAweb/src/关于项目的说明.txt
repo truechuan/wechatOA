@@ -1,0 +1,12 @@
+controller下的
+orderRecordController是预约的控制器
+submit方法是提交
+
+每天分4个时段放号
+
+bookcontrol是每天可以预约的总数表
+recordtype是每种类型可以预约的数目表
+
+
+spring下
+配置文件

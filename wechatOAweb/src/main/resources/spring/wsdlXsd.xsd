@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://localhost:9088/projectmasterweb/hardware/u" elementFormDefault="qualified" 
+xmlns="http://www.w3.org/2001/XMLSchema" 
+xmlns:tns="http://localhost:9088/projectmasterweb/hardware/u" >
+
+<element name="UserResponse">
+<complexType>
+<sequence>
+<element name="name" type="string"></element>
+</sequence>
+</complexType>
+</element>
+
+<element name="UserRequest">
+<complexType>
+<all>
+<element name="name" type="string"></element>
+</all>
+</complexType>
+</element>
+
+
+</schema>
