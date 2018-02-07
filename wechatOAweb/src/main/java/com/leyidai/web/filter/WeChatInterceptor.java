@@ -1,20 +1,18 @@
 package com.leyidai.web.filter;
 
 import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.leyidai.web.util.CategoryConstants;
+import com.leyidai.web.weChat.ConstantWeChat;
+import com.leyidai.web.weChat.WeixinUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.leyidai.web.util.CategoryConstants;
-import com.leyidai.web.weChat.ConstantWeChat;
-import com.leyidai.web.weChat.WeixinUtil;
 
 public class WeChatInterceptor implements HandlerInterceptor {
 	

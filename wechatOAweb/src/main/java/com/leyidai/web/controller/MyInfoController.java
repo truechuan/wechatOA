@@ -1,12 +1,8 @@
 package com.leyidai.web.controller;
 
-import javax.servlet.http.HttpSession;
-
-import com.leyidai.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -22,6 +18,6 @@ public class MyInfoController {
     public String myInfo(String code){
         log.info("load myAccount start");
 
-
+        return "wechatOA/myInfo";
     }
 }

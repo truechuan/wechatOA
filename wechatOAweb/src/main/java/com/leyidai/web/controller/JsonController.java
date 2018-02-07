@@ -13,14 +13,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.leyidai.web.weChat.ConstantWeChat;
-
 import javax.servlet.http.HttpServletRequest;
 
+import com.leyidai.entity.AddOrder;
+import com.leyidai.entity.OrderRecords;
+import com.leyidai.entity.RecordTypeViewNotice;
+import com.leyidai.entity.User;
+import com.leyidai.web.mapper.BookControlMapper;
+import com.leyidai.web.mapper.OrderRecordsMapper;
+import com.leyidai.web.service.DictionaryService;
+import com.leyidai.web.service.NoticeService;
+import com.leyidai.web.service.OrderRecordsService;
+import com.leyidai.web.service.RecordTypeService;
+import com.leyidai.web.service.UserService;
+import com.leyidai.web.util.DateUtil;
+import com.leyidai.web.util.DateUtil.DateFormat;
+import com.leyidai.web.util.WeChatModelUtil;
+import com.leyidai.web.weChat.ConstantWeChat;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,23 +42,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.leyidai.entity.AddOrder;
-import com.leyidai.entity.OrderRecords;
-import com.leyidai.entity.RecordTypeViewNotice;
-import com.leyidai.entity.User;
-import com.leyidai.web.mapper.BookControlMapper;
-import com.leyidai.web.mapper.NoticeMapper;
-import com.leyidai.web.mapper.OrderRecordsMapper;
-import com.leyidai.web.service.DictionaryService;
-import com.leyidai.web.service.NoticeService;
-import com.leyidai.web.service.OrderRecordsService;
-import com.leyidai.web.service.RecordTypeService;
-import com.leyidai.web.service.UserService;
-import com.leyidai.web.util.DateUtil;
-import com.leyidai.web.util.WeChatModelUtil;
-import com.leyidai.web.util.DateUtil.DateFormat;
-import com.leyidai.web.weChat.ConstantWeChat;
 
 /**
  * 与硬件对接 Controller

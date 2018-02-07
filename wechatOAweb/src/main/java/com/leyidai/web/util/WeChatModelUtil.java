@@ -3,14 +3,12 @@ package com.leyidai.web.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.leyidai.web.weChat.ConstantWeChat;
+import com.leyidai.web.weChat.WeixinUtil;
 import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.leyidai.web.weChat.ConstantWeChat;
-import com.leyidai.web.weChat.WeixinUtil;
 
 @Component
 public class WeChatModelUtil {
