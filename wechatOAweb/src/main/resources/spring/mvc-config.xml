@@ -114,10 +114,10 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/static/book/index" />
 			<mvc:mapping path="/static/register" />
-			<mvc:mapping path="/static/myAccount" />
+			<mvc:mapping path="/myInfo" />
 			<mvc:mapping path="/static/test" />
 			<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
-			<bean class="com.leyidai.web.filter.WeChatInterceptor" />
+			<bean class="com.leyidai.web.filter.CookieInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

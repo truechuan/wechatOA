@@ -6,11 +6,12 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.leyidai.entity.vo.Department;
 import com.leyidai.entity.vo.UserInfo;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,8 @@ import org.slf4j.LoggerFactory;
  * @create 2018-02-07-下午9:41
  * @description
  */
-public class WechatInterface {
-    private static final Logger log = LoggerFactory.getLogger(WechatInterface.class);
+public class AuthInterface {
+    private static final Logger log = LoggerFactory.getLogger(AuthInterface.class);
 
     private static final String QY_CorpID = "wweee725c3151ccda7";
     private static final String QY_Secret = "KnX0JIidnY1G-5LKiZdNdPOqIAG03cj5WR_aSqza7D4";
@@ -29,10 +30,6 @@ public class WechatInterface {
     private static final String APP_Secret = "Lp34XwkAqy875zkyw6oiGqVZEpklXcztchFaRj3SKok";
 
     private static final String ACCESS_TOKEN_KEY = "access_token";
-
-    static {
-        Unirest.setTimeouts(3000, 10000);
-    }
 
     /**
      * https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}
@@ -43,7 +40,7 @@ public class WechatInterface {
         try {
             HttpResponse<JsonNode> jsonResponse = Unirest.get("https://qyapi.weixin.qq.com/cgi-bin/gettoken")
                     .queryString("corpid", QY_CorpID)
-                    .queryString("corpsecret", QY_Secret)
+                    .queryString("corpsecret", APP_Secret)
                     .asJson();
             JSONObject json = jsonResponse.getBody().getObject();
             return json.getString(key);
@@ -89,6 +86,7 @@ public class WechatInterface {
             HttpResponse<JsonNode> jsonResponse = Unirest.get("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo")
                     .queryString("access_token", accessToken)
                     .queryString("code", code)
+                    .queryString("agentid", APP_AgentId)
                     .asJson();
             JSONObject json = jsonResponse.getBody().getObject();
             log.info(json.toString());
@@ -110,25 +108,49 @@ public class WechatInterface {
      */
     public static UserInfo getUserDetail(String userTicket) {
         try {
-            HttpResponse<JsonNode> jsonResponse = Unirest.post("https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail?access_token")
+            JSONObject param = new JSONObject();
+            param.put("user_ticket", userTicket);
+            HttpResponse<JsonNode> jsonResponse = Unirest.post("https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail")
                     .queryString("access_token", getAccessToken())
-                    .field("user_ticket", userTicket)
+                    .body(param.toString())
                     .asJson();
             JSONObject json = jsonResponse.getBody().getObject();
-            System.out.println(json);
-        } catch (UnirestException e) {
-            e.printStackTrace();
+            UserInfo userInfo = new UserInfo();
+            userInfo.setAvatar(json.getString("avatar"));
+            userInfo.setName(json.getString("name"));
+            userInfo.setGender(json.getInt("gender"));
+            userInfo.setMobile(json.getString("mobile"));
+            userInfo.setEmail(json.getString("email"));
+
+            JSONArray array = json.getJSONArray("department");
+            Integer[] department = new Integer[array.length()];
+            String[] departmentStr = new String[array.length()];
+
+            for (int i = 0; i < array.length(); i++) {
+                Department dep = DepartmentInterface.getDepartment(array.getInt(i));
+                department[i] = array.getInt(i);
+                departmentStr[i] = dep.getName();
+            }
+
+            userInfo.setDepartment(department);
+            userInfo.setDepartmentStr(departmentStr);
+
+            return userInfo;
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
         return null;
     }
 
 
     public static void main(String[] args) {
-        System.out.println(WechatInterface.getAccessToken());
-        String code = "8-iccoluhTi0ouwylLVqjV6JnHpkQjmUY7yI6eSfW80";
-        String userticket = getUserTicket(code);
-        System.out.println("====" + userticket);
-        getUserDetail(userticket);
+//        System.out.println(AuthInterface.getAccessToken());
+//        String code = "o4rV_aOUv4tupIa0Qw784X2agfBmASs1Gm2qUi5dCaQ";
+//        String userticket = getUserTicket(code);
+//        System.out.println("====" + userticket);
+//        getUserDetail(userticket);
+        String user_ticket = "-qqgoTy0AWHRXTenZz4nuxl3oxwgNeL6BJDAuHdl3zrRk7cMw_Yayo81UMGtoOBpfXdv4a4TMfppVUWinMb4H1S86i3SwNrrzt1aC2y9ySI";
+        getUserDetail(user_ticket);
     }
 
 }
