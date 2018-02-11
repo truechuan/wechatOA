@@ -1,0 +1,1 @@
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wweee725c3151ccda7&redirect_uri=lx.tjeasytech.com:8070&response_type=code&scope=snsapi_privateinfo&agentid=1000010&state=STATE#wechat_redirect

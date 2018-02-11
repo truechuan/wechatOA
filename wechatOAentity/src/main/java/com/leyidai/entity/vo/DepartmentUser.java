@@ -2,28 +2,46 @@ package com.leyidai.entity.vo;
 
 /**
  * @author chenchuan@autohome.com.cn
- * @create 2018-02-07-下午7:30
+ * @create 2018-02-11-下午11:10
  * @description
  */
-public class UserInfo {
+public class DepartmentUser {
 
     private String userid;
+
     private String name;
+
     private Integer[] department;
-    private String[] departmentStr;
+
     private String position;
+
     private String mobile;
+
     /**
      * 性别。0表示未定义，1表示男性，2表示女性
      */
     private Integer gender;
+
     private String genderStr;
+
     private String email;
+
+    private String weixinid;
+
     /**
      * 头像url。注：如果要获取小图将url最后的”/0”改成”/64”即可
      */
     private String avatar;
+
     private String smallAvatar;
+
+    /**
+     * 关注状态: 1=已关注，2=已冻结，4=未关注
+     */
+    private Integer status;
+
+    private String extattr;
+
 
     public String getUserid() {
         return userid;
@@ -81,12 +99,36 @@ public class UserInfo {
         this.email = email;
     }
 
+    public String getWeixinid() {
+        return weixinid;
+    }
+
+    public void setWeixinid(String weixinid) {
+        this.weixinid = weixinid;
+    }
+
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getExtattr() {
+        return extattr;
+    }
+
+    public void setExtattr(String extattr) {
+        this.extattr = extattr;
     }
 
     public String getGenderStr() {
@@ -114,13 +156,4 @@ public class UserInfo {
     public void setSmallAvatar(String smallAvatar) {
         this.smallAvatar = smallAvatar;
     }
-
-    public String[] getDepartmentStr() {
-        return departmentStr;
-    }
-
-    public void setDepartmentStr(String[] departmentStr) {
-        this.departmentStr = departmentStr;
-    }
 }
-
