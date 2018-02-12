@@ -42,10 +42,15 @@
             <div class="col-xs-7"><span class="myfont">${item.name}</span></div>
         </div>
     </c:forEach>
+
     <c:forEach items="${departments}" var="item" varStatus="status">
-        <div class="row list">
-            <div class="col-xs-2"><img class="isshow1" src="/resources/img/folder.png" alt="" width="45" height="45"></div>
-            <div class="col-xs-7"><span class="myfont isshow1">${item.name}</span></div>
+        <div class="contact">
+            <div class="row list departments_div">
+                <input class="dep_id" type="hidden" value="${item.id}"/>
+                <div class="col-xs-2"><img class="departments" src="/resources/img/folder.png" alt="" width="45"
+                                           height="45"></div>
+                <div class="col-xs-7"><span class="myfont departments">${item.name}</span></div>
+            </div>
         </div>
     </c:forEach>
     <div class="row list">
@@ -58,12 +63,51 @@
         src="<c:url value='/resources/js/jquery.min.js'/>"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".isshow1").click(function () {
-            $("div.selectshow1").slideToggle(300);
-        });
-        $(".isshow2").click(function () {
-            $("div.selectshow2").slideToggle(300);
+        $(document).on('click','.departments', function () {
+            var parent = $(this).parents(".departments_div");
+            var dep_id = parent.find(".dep_id").val();
+
+            if ($(parent).parent(".contact").find(".selectshow1").length > 0) {
+                $(parent).parent(".contact").find(".selectshow1").remove();
+                return;
+            }
+
+            getSigleDepartment(dep_id, $(parent).parent(".contact"));
+            //$("div.selectshow1").slideToggle(300);
         });
     });
+
+    function getSigleDepartment(departmentId, parent) {
+        $.ajax({
+            type: 'GET',
+            url: "/contact/singleDepartment",
+            data: {
+                'departmentId': departmentId
+            },
+            success: function (result) {
+                var usersStr = '';
+                var departmentsStr = '';
+                if (result.users.length > 0) {
+                    for (var i = 0; i < result.users.length; i++) {
+                        var item = result.users[i]
+                        usersStr += '<div class="row list"><div class="col-xs-2"><img src="' + item.avatar + '" alt="" width="45" height="45">' +
+                                '</div> <div class="col-xs-7"><span class="myfont">' + item.name + '</span></div> </div>';
+                    }
+                }
+                if (result.departments.length > 0) {
+                    for (var i = 0; i < result.departments.length; i++) {
+                        var item = result.departments[i]
+                        departmentsStr += '<div class="contact"> <div class="row list departments_div"> <input class="dep_id" type="hidden" value="' + item.id + '"/> ' +
+                                '<div class="col-xs-2"><img class="departments" src="/resources/img/folder.png" alt="" width="45" height="45"></div> ' +
+                                '<div class="col-xs-7"><span class="myfont departments">' + item.name + '</span></div> </div></div>';
+                    }
+                }
+                if (usersStr.length > 0 || departmentsStr.length > 0) {
+                    var htmlStr = '<div class="selectshow1">' + usersStr + departmentsStr + '</div>';
+                    $(parent).append(htmlStr);
+                }
+            }
+        });
+    }
 </script>
 </html>

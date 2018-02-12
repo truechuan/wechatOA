@@ -1,15 +1,18 @@
 package com.leyidai.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.leyidai.entity.vo.Department;
 import com.leyidai.entity.vo.DepartmentUser;
 import com.leyidai.web.wechatUtil.DepartmentInterface;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author chenchuan@autohome.com.cn
@@ -34,5 +37,17 @@ public class ContactController {
 
 
         return "wechatOA/contact";
+    }
+
+    @RequestMapping(value = "/contact/singleDepartment")
+    public @ResponseBody
+    Map<String,Object> getSigleDepartment(Integer departmentId){
+        List<Department> departments = DepartmentInterface.getDepartmentByParentId(departmentId);
+        List<DepartmentUser> users = DepartmentInterface.getDepartmentUser(departmentId);
+
+        Map<String,Object> map = new HashedMap();
+        map.put("departments", departments);
+        map.put("users", users);
+        return map;
     }
 }
