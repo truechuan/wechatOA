@@ -148,16 +148,15 @@ public class AnnouncementController extends BaseController {
         } else {
             //发送企业消息
             TextMessage text = new TextMessage();
-            text.setTouser("Chuan|FengTingYu");
+            text.setTouser("@all");
 
             JSONObject json = new JSONObject();
-            json.put("content", announcement.getDetailInfo());
+            json.put("content", announcement.getDetailInfo().replace("<p>", "").replace("</p>", ""));
             text.setText(json);
             MessageInterface.sendMessage(text);
             model.addAttribute("announcement", announcement);
             model.addAttribute("result", "success");
             return "announcementForm";
-
 
 //			if(areaList!=null&&!areaList.equals("")&&areaList.indexOf(",")>0)
 //			{
