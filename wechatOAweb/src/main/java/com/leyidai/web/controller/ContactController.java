@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.leyidai.entity.vo.Department;
 import com.leyidai.entity.vo.DepartmentUser;
-import com.leyidai.web.wechatUtil.DepartmentInterface;
+import com.leyidai.utils.wechatUtil.DepartmentInterface;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -194,15 +194,6 @@
 											<c:if test="${item.value eq announcement.lanmu.value}">selected</c:if>>${item.description }</option>
 									</c:forEach>
 								</form:select>
-								<c:if test="${isMoreManger eq 'true' }">
-								    <label>所属区县</label>
-									
-									<c:forEach items="${areas }" var="item" varStatus="status">
-										<label class="checkbox inline"><input type="checkbox" name="box" value="${item.areaCode }"/>${item.areaDesc }</label>
-										<c:if test="${status.index eq 8}"><br/></c:if>
-									</c:forEach>
-									<input id="areaList" type="hidden" name="areaList" value="1">
-								</c:if>
 								<label>内容</label>
 								<textarea rows="30" cols="70" id="content" name="detailInfo">${announcement.detailInfo}</textarea>
 								<script type="text/javascript">
@@ -266,8 +257,8 @@
 	    var areaLength = $("input[name=box]:checked").length; 
 	  	
 	    
-	    $("#areaList").val(areaTemp);
-	    alert($("#areaList").val());
+//	    $("#areaList").val(areaTemp);
+//	    alert($("#areaList").val());
 	    
 		$('#announcementForm').submit();
 		return false;

@@ -1,4 +1,4 @@
-package com.leyidai.web.wechatUtil;
+package com.leyidai.utils.wechatUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public class DepartmentInterface {
     private static Department queryDepartment(Integer id) {
         try {
             HttpResponse<JsonNode> jsonResponse = Unirest.get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
-                    .queryString("access_token", AuthInterface.getAccessToken())
+                    .queryString("access_token", AuthInterface.getAccessToken(WechatContent.CONTACT_Secret))
                     .queryString("id", id)
                     .asJson();
             JSONObject json = jsonResponse.getBody().getObject();
@@ -88,7 +88,7 @@ public class DepartmentInterface {
     public static List<DepartmentUser> getDepartmentUser(Integer departmentId) {
         try {
             HttpResponse<JsonNode> jsonResponse = Unirest.get("https://qyapi.weixin.qq.com/cgi-bin/user/list")
-                    .queryString("access_token", AuthInterface.getAccessToken())
+                    .queryString("access_token", AuthInterface.getAccessToken(WechatContent.CONTACT_Secret))
                     .queryString("department_id", departmentId)
                     .queryString("fetch_child", 0)
                     .queryString("status", 0)
@@ -129,6 +129,5 @@ public class DepartmentInterface {
 
     public static void main(String[] args) {
         List<DepartmentUser> list = getDepartmentUser(1);
-        System.out.println(AuthInterface.getAccessToken());
     }
 }

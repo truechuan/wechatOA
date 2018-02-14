@@ -15,6 +15,7 @@
     <%@ include file="../include/commoncss.jsp" %>
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>">
 </head>
+<body>
 <section class="index-head">
     <span>${departmentName}</span>
     <span><img class="useradd1" src="/resources/img/useradd1.png" alt="" width="30" height="30"></span>
